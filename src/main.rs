@@ -42,8 +42,8 @@ async fn main() {
     // CORS – allow the Next.js dev server
     let cors = CorsLayer::new()
         .allow_origin([
-            "http://localhost:3000".parse::<axum::http::HeaderValue>().unwrap(),
-            "http://localhost:3002".parse::<axum::http::HeaderValue>().unwrap(),
+            "https://pavkhemerakdev.vercel.app".parse::<axum::http::HeaderValue>().unwrap(),
+            "https://dashboard-nine-peach-51.vercel.app".parse::<axum::http::HeaderValue>().unwrap(),
         ])
         .allow_methods(Any)
         .allow_headers(Any);
