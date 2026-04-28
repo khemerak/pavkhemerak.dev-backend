@@ -127,6 +127,9 @@ pub async fn create_post(
 
     let id = uuid::Uuid::new_v4().to_string();
     let tags_json = serde_json::to_string(&body.tags).unwrap_or_else(|_| "[]".into());
+    let image_url = body.image_url.filter(|s| !s.is_empty());
+    let image_alt = body.image_alt.filter(|s| !s.is_empty());
+    let code_snippet = body.code_snippet.filter(|s| !s.is_empty());
 
     sqlx::query(
         r#"INSERT INTO blog_posts
@@ -143,10 +146,10 @@ pub async fn create_post(
     .bind(&body.read_time)
     .bind(&body.category)
     .bind(&body.category_color)
-    .bind(&body.image_url)
-    .bind(&body.image_alt)
+    .bind(&image_url)
+    .bind(&image_alt)
     .bind(&tags_json)
-    .bind(&body.code_snippet)
+    .bind(&code_snippet)
     .execute(&state.db)
     .await?;
 
@@ -181,9 +184,21 @@ pub async fn update_post(
     let read_time = body.read_time.unwrap_or(existing.read_time);
     let category = body.category.unwrap_or(existing.category);
     let category_color = body.category_color.unwrap_or(existing.category_color);
-    let image_url = body.image_url.or(existing.image_url);
-    let image_alt = body.image_alt.or(existing.image_alt);
-    let code_snippet = body.code_snippet.or(existing.code_snippet);
+    let image_url = match body.image_url {
+        Some(s) if s.is_empty() => None,
+        Some(s) => Some(s),
+        None => existing.image_url,
+    };
+    let image_alt = match body.image_alt {
+        Some(s) if s.is_empty() => None,
+        Some(s) => Some(s),
+        None => existing.image_alt,
+    };
+    let code_snippet = match body.code_snippet {
+        Some(s) if s.is_empty() => None,
+        Some(s) => Some(s),
+        None => existing.code_snippet,
+    };
     let tags_json = match body.tags {
         Some(t) => serde_json::to_string(&t).unwrap_or_else(|_| "[]".into()),
         None => existing.tags,
