@@ -1,6 +1,6 @@
 # pavkhemerak-api
 
-Rust/Axum backend API powering [pavkhemerak.dev](https://pavkhemerak.dev). Serves the blog content, GitHub activity feed, and security tooling endpoints.
+Rust/Axum backend API powering [pavkhemerak.dev](https://pavkhemerak.dev). Serves blog content, portfolio CMS content, GitHub activity feed, and security tooling endpoints.
 
 ## Tech Stack
 
@@ -37,6 +37,12 @@ Rust/Axum backend API powering [pavkhemerak.dev](https://pavkhemerak.dev). Serve
 | `POST` | `/api/blog/posts` | Create a new post |
 | `PUT` | `/api/blog/posts/{slug}` | Update an existing post |
 | `DELETE` | `/api/blog/posts/{slug}` | Delete a post |
+
+### Portfolio CMS
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/api/portfolio/content` | Fetch persisted portfolio content JSON |
+| `PUT` | `/api/portfolio/content` | Save full portfolio content JSON (`x-api-key` required) |
 
 ### GitHub
 | Method | Path | Description |
@@ -79,7 +85,7 @@ The server starts on `http://localhost:3001` by default. The SQLite database is 
 | `DATABASE_URL` | `sqlite:data/pavkhemerak.db` | SQLite connection string |
 | `GITHUB_USERNAME` | `khemerak` | GitHub username for activity feed |
 | `ETHERSCAN_API_KEY` | *(empty)* | Etherscan API key (optional) |
-| `ADMIN_API_KEY` | `change-me-in-production` | API key for blog admin endpoints |
+| `ADMIN_API_KEY` | `change-me-in-production` | API key for blog and portfolio admin endpoints |
 
 ### Example: Creating a Blog Post
 

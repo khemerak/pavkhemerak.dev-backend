@@ -57,5 +57,18 @@ async fn run_migrations(pool: &SqlitePool) {
         .execute(pool)
         .await; // ignore error — column may already exist
 
+    sqlx::query(
+        r#"
+        CREATE TABLE IF NOT EXISTS portfolio_content (
+            id          INTEGER PRIMARY KEY CHECK (id = 1),
+            content     TEXT NOT NULL,
+            updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+        "#,
+    )
+    .execute(pool)
+    .await
+    .expect("Failed to create portfolio_content table");
+
     tracing::info!("Database migrations applied");
 }
