@@ -42,7 +42,7 @@ async fn main() {
     // CORS – allow the Next.js dev server
     let cors = CorsLayer::new()
         .allow_origin([
-            "https://pavkhemerakdev.vercel.app".parse::<axum::http::HeaderValue>().unwrap(),
+            "https://pavkhemerak.is-a.dev".parse::<axum::http::HeaderValue>().unwrap(),
             "https://dashboard-nine-peach-51.vercel.app".parse::<axum::http::HeaderValue>().unwrap(),
         ])
         .allow_methods(Any)
