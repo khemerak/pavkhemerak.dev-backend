@@ -43,7 +43,7 @@ async fn main() {
     let cors = CorsLayer::new()
         .allow_origin([
             "https://pavkhemerak.is-a.dev".parse::<axum::http::HeaderValue>().unwrap(),
-            "https://dashboard-nine-peach-51.vercel.app".parse::<axum::http::HeaderValue>().unwrap(),
+            "https://dash-pavkhemerak.vercel.app".parse::<axum::http::HeaderValue>().unwrap(),
         ])
         .allow_methods(Any)
         .allow_headers(Any);
